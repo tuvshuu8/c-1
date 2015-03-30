@@ -1,0 +1,32 @@
+#include "C:\Users\work\OneDrive\Documents\adc\bod2.h"
+
+
+char ADC_VALUE_AN0;
+char ADC_VALUE_AN1;
+float T,P;
+   
+
+void main()
+{
+   setup_adc_ports(AN0_AN1_VSS_VREF);
+   setup_adc(ADC_CLOCK_INTERNAL);  
+while(TRUE)
+      {
+         
+         set_adc_channel(0);
+         ADC_VALUE_AN0=read_adc();
+         set_adc_channel(1);
+         ADC_VALUE_AN1=read_adc(); 
+         volt=25*ADC_VALUE_AN0+15.8;
+         P=100*ADC_VALUE_AN1+20.5;
+         if((T>25 && T<50) && (P>100 && P<200))
+         {
+            printf("Normal %f\r\n",T,P);
+         }
+         else{         
+            output_toggle(pin_d0);
+            printf("warning %f\r\n",T,P);
+            delay_ms(250);
+         }
+      }
+   }   
